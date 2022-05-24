@@ -72,7 +72,7 @@ function printQuote() {
  }
  return printQuote;
 };
-
+//printQuote
 document.querySelector('main').innerHTML = printQuote();
 
 
