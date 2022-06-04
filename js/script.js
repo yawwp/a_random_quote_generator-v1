@@ -3,12 +3,8 @@ Treehouse FSJS Techdegree:
 project 1 - A Random Quote Generator
 ******************************************/
 
-// For assistance: 
-  // Check the "Project Resources" section of the project instructions
-  // Reach out in your Slack community - https://treehouse-fsjs-102.slack.com/app_redirect?channel=chit-chat
-
 /*** 
- * `quotes` array 
+ * Array of objects that consist of a "quote", it's "source", the "citation", and "year" it was said. 
 ***/
 const quotes = [
   {  quote: "Houston, we have a problem", 
@@ -42,51 +38,58 @@ const quotes = [
  }
 ];
 
-
+/*
+  The getRandomQuote function selects a random object in the `quotes` array. 
+  In the function,
+      `quotes` is an array and we needed to select a random number from the array.
+      Math.random() method was used to randomize the selection from the quotes length.
+      Math.floor is used to select a position in the array ranging from 0 to anywhere 
+      in the quotes length and this is set equal to 'randomQuote'.
+  Using this function will return a randomQuote.
+*/
 function getRandomQuote() {
  let randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
- return randomQuote; //returns a random quote from the `quotes` array 
-};
+ return randomQuote;
+}
 
-/***
-* `printQuote` function
-***/
+let html = ``; // Empty string value. This will be where we store the HTML elements. 
+
+/*
+  The printQuote function inputs html elements into the empty string created above. 
+
+      Firstly, we grab a quote from the getRandomQuote function and save it the variable 'quoteSelected'.
+      The quote that is selected is then added in the html string. The html string is in form of an html element. 
+      Each line consists of part of the object using methods, 
+          "quoteSelected.quote" for the quote and "quoteSelected.source" for the soruce.
+
+      Secondly, an "If else" statement is used to test the existence of a citation in the object and the existence 
+      of the year in the object. If they are aviable then it will be added into the string. If not, then the html
+      string will close out with the last </p> element. 
+
+      Lastly, we return the the value of the string to the DOM. 
+*/
+
 function printQuote() { 
  let quoteSelected = getRandomQuote();
- printQuote =  `
+ html =  `
    <p class="quote"> ${quoteSelected.quote} </p>
    <p class="source"> ${quoteSelected.source}
  `
  if (quoteSelected.citation !== undefined) {
-   printQuote += `
+   html += `
    <span class="citation">${quoteSelected.citation}</span>`
  } else {
-   printQuote += `</p>`
+   html += `</p>`
  }
 
  if (quoteSelected.year !== undefined) {
-   printQuote += `
+   html += `
    <span class="year"> ${quoteSelected.year} </span></p>`
  } else {
-   print += `</p>`
+   html += `</p>`
  }
- return printQuote;
+ return document.getElementById('quote-box').innerHTML = html;
 };
-//printQuote
-document.querySelector('main').innerHTML = printQuote();
 
-
-
- // 6. set the innerHTML of the quote-box div to equal the 
- // complete HTML string
-
-
-
-
-
-/***
-* click event listener for the print quote button
-* DO NOT CHANGE THE CODE BELOW!!
-***/
 
 document.getElementById('load-quote').addEventListener("click", printQuote, false);
